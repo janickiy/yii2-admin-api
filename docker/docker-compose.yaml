@@ -1,0 +1,97 @@
+version: '3.7'
+networks:
+  yii-network:
+    driver: bridge
+
+services:
+
+  yii-nginx:
+    container_name: advanced-nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+      - ./../:/var/www/app
+    environment:
+      NGINX_ENVSUBST_OUTPUT_DIR: /etc/nginx/conf.d
+      FRONTEND_SERVER_NAME: ${FRONTEND_SERVER_NAME}
+      BACKEND_SERVER_NAME: ${BACKEND_SERVER_NAME}
+    ports:
+      - "80:80"
+    networks:
+      yii-network:
+        aliases:
+          - front-yii2
+          - back-yii2
+          - front.yii2.loc
+          - back.yii2.loc
+    depends_on:
+      - advanced-php-fpm
+      - mysql
+    links:
+      - advanced-php-fpm
+      - mysql
+
+  advanced-php-fpm:
+    container_name: advanced-php-fpm
+    build:
+      context: ./php-fpm
+      dockerfile: Dockerfile
+    volumes:
+      - ./../:/var/www/app
+    networks:
+      - yii-network
+
+  mysql:
+    container_name: yii-mysql
+    image: mysql:8.0
+    networks:
+      - yii-network
+    volumes:
+      - ./mysql/lib:/var/lib/mysql
+      - ./mysql/log:/var/log/mysql
+      - ./mysql/conf:/etc/mysql/conf.d/my.cnf
+      - ./mysql:/docker-entrypoint-initdb.d
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_HOST=%
+
+#  web:
+#    image: nginx:latest
+#    container_name: nginx-yii2-advanced
+#    environment:
+#      - NGINX_SERVER_NAME:test.com
+#    volumes:
+#      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+#    ports:
+#      - "8081:80"
+#    depends_on:
+#      - app
+#
+#  app:
+#    build:
+#      dockerfile:
+#        ./php-fpm/Dockerfile
+#    container_name: php-fpm-advanced
+#    volumes:
+#      - ./../:/var/www/app
+#
+#  db:
+#    image: mysql:8.3
+#    volumes:
+#      - /usr/local/var/mysql:/var/lib/mysql
+#    environment:
+#      MYSQL_ALLOW_EMPTY_PASSWORD: true
+#      MYSQL_ROOT_PASSWORD: ''
+#      MYSQL_USER: dima
+#      MYSQL_PASSWORD: ''
+#      MYSQL_DATABASE: test
+#    ports:
+#      - "3306:3306"
+#    user: "501:20"
+#    restart: on-failure
