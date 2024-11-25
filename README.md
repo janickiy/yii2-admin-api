@@ -5,7 +5,7 @@
 <h3>Project contains next modules:</h3>
 
 - Yii2 advanced template
-- php:8.0-fpm-alpine
+- php:8.3-fpm
 - nginx:alpine
 
 <h3>To get started follow these steps:</h3>
