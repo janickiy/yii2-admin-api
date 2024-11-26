@@ -115,6 +115,6 @@ echo _gettext("Go back");
 
     public function getSourceContext()
     {
-        return new Source("", "modals/index_dialog_modal.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/modals/index_dialog_modal.twig");
+        return new Source("", "modals/index_dialog_modal.twig", "/var/www/site1.local/www/phpMyAdmin/templates/modals/index_dialog_modal.twig");
     }
 }

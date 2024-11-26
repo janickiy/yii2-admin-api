@@ -128,6 +128,6 @@ class __TwigTemplate_bd7143e5da26f475b17c6ec045d82d48 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "scripts.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/scripts.twig");
+        return new Source("", "scripts.twig", "/var/www/site1.local/www/phpMyAdmin/templates/scripts.twig");
     }
 }

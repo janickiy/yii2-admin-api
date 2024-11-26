@@ -289,6 +289,6 @@ echo _gettext("Default");
 
     public function getSourceContext()
     {
-        return new Source("", "database/structure/body_for_table_summary.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/database/structure/body_for_table_summary.twig");
+        return new Source("", "database/structure/body_for_table_summary.twig", "/var/www/site1.local/www/phpMyAdmin/templates/database/structure/body_for_table_summary.twig");
     }
 }

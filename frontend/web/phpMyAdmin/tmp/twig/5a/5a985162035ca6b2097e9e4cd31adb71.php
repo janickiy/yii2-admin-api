@@ -294,6 +294,6 @@ class __TwigTemplate_d2f69ca8592f3c0d5d81de73c4baf727 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "import/javascript.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/import/javascript.twig");
+        return new Source("", "import/javascript.twig", "/var/www/site1.local/www/phpMyAdmin/templates/import/javascript.twig");
     }
 }

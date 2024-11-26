@@ -75,6 +75,6 @@ class __TwigTemplate_d22d7a3db6dd88f5dddd15c18ed143ea extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "recent_favorite_table_recent.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/recent_favorite_table_recent.twig");
+        return new Source("", "recent_favorite_table_recent.twig", "/var/www/site1.local/www/phpMyAdmin/templates/recent_favorite_table_recent.twig");
     }
 }

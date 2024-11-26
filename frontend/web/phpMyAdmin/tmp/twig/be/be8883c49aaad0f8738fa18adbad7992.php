@@ -93,6 +93,6 @@ class __TwigTemplate_600a083fdf449c7307fdd570e052a3a1 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "display/results/table_navigation_button.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/display/results/table_navigation_button.twig");
+        return new Source("", "display/results/table_navigation_button.twig", "/var/www/site1.local/www/phpMyAdmin/templates/display/results/table_navigation_button.twig");
     }
 }

@@ -136,6 +136,6 @@ class __TwigTemplate_63d11becafcc573dffb90420cdd7b0d667676b03dd223871bb58499a0d8
 
     public function getSourceContext()
     {
-        return new Source("", "database/structure/index.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/database/structure/index.twig");
+        return new Source("", "database/structure/index.twig", "/var/www/site1.local/www/phpMyAdmin/templates/database/structure/index.twig");
     }
 }

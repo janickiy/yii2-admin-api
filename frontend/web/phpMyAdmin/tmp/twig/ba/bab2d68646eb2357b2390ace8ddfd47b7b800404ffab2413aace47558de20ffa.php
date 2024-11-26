@@ -94,6 +94,6 @@ class __TwigTemplate_d35e37d528a1dd7418f3cd517baf592f70556d5639e188c28a136566967
 
     public function getSourceContext()
     {
-        return new Source("", "display/results/table_headers_for_columns.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/display/results/table_headers_for_columns.twig");
+        return new Source("", "display/results/table_headers_for_columns.twig", "/var/www/site1.local/www/phpMyAdmin/templates/display/results/table_headers_for_columns.twig");
     }
 }

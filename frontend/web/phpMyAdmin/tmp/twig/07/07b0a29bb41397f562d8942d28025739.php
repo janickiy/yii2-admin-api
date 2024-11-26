@@ -94,6 +94,6 @@ class __TwigTemplate_21c19d2dead2f5a4d522a66a0c8a940d extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "display/results/table_headers_for_columns.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/display/results/table_headers_for_columns.twig");
+        return new Source("", "display/results/table_headers_for_columns.twig", "/var/www/site1.local/www/phpMyAdmin/templates/display/results/table_headers_for_columns.twig");
     }
 }

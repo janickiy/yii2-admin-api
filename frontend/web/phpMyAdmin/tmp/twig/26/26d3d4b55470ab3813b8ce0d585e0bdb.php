@@ -734,6 +734,6 @@ echo _gettext("Get more themes!");
 
     public function getSourceContext()
     {
-        return new Source("", "home/index.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/home/index.twig");
+        return new Source("", "home/index.twig", "/var/www/site1.local/www/phpMyAdmin/templates/home/index.twig");
     }
 }

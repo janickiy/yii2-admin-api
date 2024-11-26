@@ -250,6 +250,6 @@ echo _gettext("Switch to dark theme");
 
     public function getSourceContext()
     {
-        return new Source("", "console/display.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/console/display.twig");
+        return new Source("", "console/display.twig", "/var/www/site1.local/www/phpMyAdmin/templates/console/display.twig");
     }
 }

@@ -815,6 +815,6 @@ echo _gettext("Drop");
 
     public function getSourceContext()
     {
-        return new Source("", "server/databases/index.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/server/databases/index.twig");
+        return new Source("", "server/databases/index.twig", "/var/www/site1.local/www/phpMyAdmin/templates/server/databases/index.twig");
     }
 }

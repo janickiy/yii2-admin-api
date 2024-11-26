@@ -74,6 +74,6 @@ class __TwigTemplate_5bfd7f2a256fb740a0c941ba1b3827b5 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "file_select_options.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/file_select_options.twig");
+        return new Source("", "file_select_options.twig", "/var/www/site1.local/www/phpMyAdmin/templates/file_select_options.twig");
     }
 }

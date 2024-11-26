@@ -71,6 +71,6 @@ class __TwigTemplate_dee3bef2cb08044c9ecf5479951b78eb extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "display/results/row_data.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/display/results/row_data.twig");
+        return new Source("", "display/results/row_data.twig", "/var/www/site1.local/www/phpMyAdmin/templates/display/results/row_data.twig");
     }
 }

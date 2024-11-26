@@ -69,6 +69,6 @@ class __TwigTemplate_98cfdba6b81bd030e730a8bafdf8e615 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "display/results/page_selector.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/display/results/page_selector.twig");
+        return new Source("", "display/results/page_selector.twig", "/var/www/site1.local/www/phpMyAdmin/templates/display/results/page_selector.twig");
     }
 }

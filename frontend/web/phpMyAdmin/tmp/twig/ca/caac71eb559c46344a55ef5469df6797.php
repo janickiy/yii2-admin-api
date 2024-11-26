@@ -98,6 +98,6 @@ echo _gettext("Query results operations");
 
     public function getSourceContext()
     {
-        return new Source("", "sql/no_results_returned.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/sql/no_results_returned.twig");
+        return new Source("", "sql/no_results_returned.twig", "/var/www/site1.local/www/phpMyAdmin/templates/sql/no_results_returned.twig");
     }
 }

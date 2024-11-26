@@ -413,6 +413,6 @@ echo _gettext("Close");
 
     public function getSourceContext()
     {
-        return new Source("", "columns_definitions/column_definitions_form.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/columns_definitions/column_definitions_form.twig");
+        return new Source("", "columns_definitions/column_definitions_form.twig", "/var/www/site1.local/www/phpMyAdmin/templates/columns_definitions/column_definitions_form.twig");
     }
 }

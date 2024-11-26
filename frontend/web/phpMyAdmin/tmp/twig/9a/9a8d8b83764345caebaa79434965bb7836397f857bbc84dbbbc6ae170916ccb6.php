@@ -57,6 +57,6 @@ class __TwigTemplate_5eeb59cc865f21d617d6a068ceb5fb20438f5dd0993ffd55efdef99ffdc
 
     public function getSourceContext()
     {
-        return new Source("", "display/results/empty_display.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/display/results/empty_display.twig");
+        return new Source("", "display/results/empty_display.twig", "/var/www/site1.local/www/phpMyAdmin/templates/display/results/empty_display.twig");
     }
 }

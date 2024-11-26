@@ -118,6 +118,6 @@ echo _gettext("No");
 
     public function getSourceContext()
     {
-        return new Source("", "table/delete/confirm.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/table/delete/confirm.twig");
+        return new Source("", "table/delete/confirm.twig", "/var/www/site1.local/www/phpMyAdmin/templates/table/delete/confirm.twig");
     }
 }

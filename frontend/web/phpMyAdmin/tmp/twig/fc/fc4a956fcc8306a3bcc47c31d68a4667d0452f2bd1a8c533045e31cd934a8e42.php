@@ -75,6 +75,6 @@ class __TwigTemplate_16959a40c7c6da64a96593eeeaa4a3261f3156ef0316b71d864628b4fc2
 
     public function getSourceContext()
     {
-        return new Source("", "recent_favorite_table_recent.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/recent_favorite_table_recent.twig");
+        return new Source("", "recent_favorite_table_recent.twig", "/var/www/site1.local/www/phpMyAdmin/templates/recent_favorite_table_recent.twig");
     }
 }

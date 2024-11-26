@@ -59,6 +59,6 @@ class __TwigTemplate_2b8edf629b48bbbc87c881203de908c9 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "database/structure/collation_definition.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/database/structure/collation_definition.twig");
+        return new Source("", "database/structure/collation_definition.twig", "/var/www/site1.local/www/phpMyAdmin/templates/database/structure/collation_definition.twig");
     }
 }

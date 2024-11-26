@@ -128,6 +128,6 @@ class __TwigTemplate_cb7eba9271e6391058c3d7856e726409f1b8a1262ce2b2f8f52ef3f5a90
 
     public function getSourceContext()
     {
-        return new Source("", "scripts.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/scripts.twig");
+        return new Source("", "scripts.twig", "/var/www/site1.local/www/phpMyAdmin/templates/scripts.twig");
     }
 }

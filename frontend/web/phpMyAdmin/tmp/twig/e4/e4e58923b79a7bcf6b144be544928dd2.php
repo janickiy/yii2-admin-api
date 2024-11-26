@@ -638,6 +638,6 @@ echo _gettext("Binary - do not edit");
 
     public function getSourceContext()
     {
-        return new Source("", "table/insert/column_row.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/table/insert/column_row.twig");
+        return new Source("", "table/insert/column_row.twig", "/var/www/site1.local/www/phpMyAdmin/templates/table/insert/column_row.twig");
     }
 }

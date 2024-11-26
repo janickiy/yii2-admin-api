@@ -1155,6 +1155,6 @@ echo _gettext("Check referential integrity");
 
     public function getSourceContext()
     {
-        return new Source("", "table/operations/index.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/table/operations/index.twig");
+        return new Source("", "table/operations/index.twig", "/var/www/site1.local/www/phpMyAdmin/templates/table/operations/index.twig");
     }
 }

@@ -59,6 +59,6 @@ class __TwigTemplate_45ebde2368c16c14d020ffce4fa3325bf571cae665bce2c46e22c6e941b
 
     public function getSourceContext()
     {
-        return new Source("", "database/structure/collation_definition.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/database/structure/collation_definition.twig");
+        return new Source("", "database/structure/collation_definition.twig", "/var/www/site1.local/www/phpMyAdmin/templates/database/structure/collation_definition.twig");
     }
 }

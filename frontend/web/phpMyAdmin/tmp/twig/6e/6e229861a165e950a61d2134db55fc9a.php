@@ -75,6 +75,6 @@ class __TwigTemplate_9f54959d5f89f3ec53606b059b5708a2 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "database/structure/favorite_anchor.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/database/structure/favorite_anchor.twig");
+        return new Source("", "database/structure/favorite_anchor.twig", "/var/www/site1.local/www/phpMyAdmin/templates/database/structure/favorite_anchor.twig");
     }
 }

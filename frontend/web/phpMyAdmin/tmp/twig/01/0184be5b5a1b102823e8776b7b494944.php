@@ -177,6 +177,6 @@ echo _gettext("Close");
 
     public function getSourceContext()
     {
-        return new Source("", "table/insert/actions_panel.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/table/insert/actions_panel.twig");
+        return new Source("", "table/insert/actions_panel.twig", "/var/www/site1.local/www/phpMyAdmin/templates/table/insert/actions_panel.twig");
     }
 }

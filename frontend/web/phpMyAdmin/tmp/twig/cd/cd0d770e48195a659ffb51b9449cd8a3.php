@@ -67,6 +67,6 @@ class __TwigTemplate_9db430d4ab18802b0183880db5d39ab3 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "config/form_display/group_header.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/config/form_display/group_header.twig");
+        return new Source("", "config/form_display/group_header.twig", "/var/www/site1.local/www/phpMyAdmin/templates/config/form_display/group_header.twig");
     }
 }

@@ -75,6 +75,6 @@ class __TwigTemplate_0bf8e84f87bf6739ca0ec6043588d42196d60673e2892fbf09bb68382e6
 
     public function getSourceContext()
     {
-        return new Source("", "database/structure/favorite_anchor.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/database/structure/favorite_anchor.twig");
+        return new Source("", "database/structure/favorite_anchor.twig", "/var/www/site1.local/www/phpMyAdmin/templates/database/structure/favorite_anchor.twig");
     }
 }

@@ -94,6 +94,6 @@ echo _gettext("Clear fast filter");
 
     public function getSourceContext()
     {
-        return new Source("", "navigation/tree/fast_filter.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/navigation/tree/fast_filter.twig");
+        return new Source("", "navigation/tree/fast_filter.twig", "/var/www/site1.local/www/phpMyAdmin/templates/navigation/tree/fast_filter.twig");
     }
 }

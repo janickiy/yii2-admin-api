@@ -71,6 +71,6 @@ class __TwigTemplate_f14db13c799282680c29ec3f0ea18dfe74bab069758666962ff812475d1
 
     public function getSourceContext()
     {
-        return new Source("", "display/results/row_data.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/display/results/row_data.twig");
+        return new Source("", "display/results/row_data.twig", "/var/www/site1.local/www/phpMyAdmin/templates/display/results/row_data.twig");
     }
 }

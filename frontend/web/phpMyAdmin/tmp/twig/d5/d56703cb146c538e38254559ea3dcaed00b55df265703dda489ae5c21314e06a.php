@@ -471,6 +471,6 @@ echo _gettext("Last check");
 
     public function getSourceContext()
     {
-        return new Source("", "table/structure/display_table_stats.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/table/structure/display_table_stats.twig");
+        return new Source("", "table/structure/display_table_stats.twig", "/var/www/site1.local/www/phpMyAdmin/templates/table/structure/display_table_stats.twig");
     }
 }

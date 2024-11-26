@@ -72,6 +72,6 @@ echo _gettext("Containing the word:");
 
     public function getSourceContext()
     {
-        return new Source("", "filter.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/filter.twig");
+        return new Source("", "filter.twig", "/var/www/site1.local/www/phpMyAdmin/templates/filter.twig");
     }
 }

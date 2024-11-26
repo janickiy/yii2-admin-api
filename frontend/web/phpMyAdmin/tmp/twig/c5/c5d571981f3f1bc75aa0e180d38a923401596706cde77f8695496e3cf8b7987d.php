@@ -85,6 +85,6 @@ echo _gettext("Close");
 
     public function getSourceContext()
     {
-        return new Source("", "modals/preview_sql_confirmation.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/modals/preview_sql_confirmation.twig");
+        return new Source("", "modals/preview_sql_confirmation.twig", "/var/www/site1.local/www/phpMyAdmin/templates/modals/preview_sql_confirmation.twig");
     }
 }

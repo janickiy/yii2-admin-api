@@ -78,6 +78,6 @@ class __TwigTemplate_5614e27c4f10181e9a142978913942863ad6d0f1478ecff4ea2e70b76f6
 
     public function getSourceContext()
     {
-        return new Source("", "display/results/comment_for_row.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/display/results/comment_for_row.twig");
+        return new Source("", "display/results/comment_for_row.twig", "/var/www/site1.local/www/phpMyAdmin/templates/display/results/comment_for_row.twig");
     }
 }

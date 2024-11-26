@@ -558,6 +558,6 @@ echo _gettext("in use");
 
     public function getSourceContext()
     {
-        return new Source("", "database/structure/structure_table_row.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/database/structure/structure_table_row.twig");
+        return new Source("", "database/structure/structure_table_row.twig", "/var/www/site1.local/www/phpMyAdmin/templates/database/structure/structure_table_row.twig");
     }
 }

@@ -92,6 +92,6 @@ class __TwigTemplate_b70402a89a09251b88580786430be157 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "login/header.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/login/header.twig");
+        return new Source("", "login/header.twig", "/var/www/site1.local/www/phpMyAdmin/templates/login/header.twig");
     }
 }

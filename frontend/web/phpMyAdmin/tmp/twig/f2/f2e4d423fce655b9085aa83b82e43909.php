@@ -80,6 +80,6 @@ class __TwigTemplate_b7c3b76844e639c884f73ae6e1ffb3f4 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "sql/sql_query_results.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/sql/sql_query_results.twig");
+        return new Source("", "sql/sql_query_results.twig", "/var/www/site1.local/www/phpMyAdmin/templates/sql/sql_query_results.twig");
     }
 }

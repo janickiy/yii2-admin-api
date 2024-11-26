@@ -99,6 +99,6 @@ echo _gettext("No");
 
     public function getSourceContext()
     {
-        return new Source("", "database/structure/drop_form.twig", "/var/www/site1.local/www/phpMyAdmin2/templates/database/structure/drop_form.twig");
+        return new Source("", "database/structure/drop_form.twig", "/var/www/site1.local/www/phpMyAdmin/templates/database/structure/drop_form.twig");
     }
 }
