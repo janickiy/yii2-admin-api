@@ -31,7 +31,7 @@ class UsersController extends Controller
                             'allow' => true,
                             'roles' => ['@'],
                             'matchCallback' => function ($rule, $action) {
-                                return Yii::$app->user->can('manageRBAC');
+                                return Yii::$app->user->can('updateContent');
                             },
                         ],
                     ],

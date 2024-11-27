@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Category;
+use yii\grid\SerialColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -16,8 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?php if (Yii::$app->user->can('updateContent')): ?>
         <p>
             <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
@@ -30,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => SerialColumn::class],
 
             'id',
             'name',
@@ -38,8 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => ActionColumn::class,
                 'visibleButtons' => [
-                    'update' => Yii::$app->user->can('manageCategory'),
-                    'delete' => Yii::$app->user->can('manageCategory'),
+                    'update' => Yii::$app->user->can('updateContent'),
+                    'delete' => Yii::$app->user->can('updateContent'),
                 ],
                 'urlCreator' => function ($action, Category $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
