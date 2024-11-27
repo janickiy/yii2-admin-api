@@ -24,7 +24,7 @@ class Feedback extends \yii\db\ActiveRecord
      */
     public static function tableName(): string
     {
-        return 'feedbacks';
+        return 'feedback';
     }
 
     /**
