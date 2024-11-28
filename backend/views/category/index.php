@@ -30,15 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => SerialColumn::class],
-
             'id',
             'name',
-            'parent_id',
             [
                 'class' => ActionColumn::class,
                 'visibleButtons' => [
-                    'update' => Yii::$app->user->can('updateContent'),
-                    'delete' => Yii::$app->user->can('updateContent'),
+                    'delete'=> function($model){
+                        return $model->id !== Yii::$app->user->id;
+                    }
                 ],
                 'urlCreator' => function ($action, Category $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);

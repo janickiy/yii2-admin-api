@@ -24,3 +24,9 @@ echo 127.0.0.1 front.yii2.loc >> /etc/hosts;
 echo 127.0.0.1 back.yii2.loc >> /etc/hosts;
 ```
 if you changed <code>FRONTEND_SERVER_NAME</code> or <code>BACKEND_SERVER_NAME</code> in <code>.env</code> file, then replace <code>front.yii2.loc</code> and <code>back.yii2.loc</code> with your actual domains
+
+Migration
+
+php yii migrate
+php yii migrate/up --migrationPath=@yii/rbac/migrations
+php yii my-rbac/init

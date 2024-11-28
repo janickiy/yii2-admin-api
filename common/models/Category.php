@@ -2,8 +2,7 @@
 
 namespace common\models;
 
-use Yii;
-use yii\db\ActiveQuery;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "categories".
@@ -12,9 +11,6 @@ use yii\db\ActiveQuery;
  * @property string $name
  * @property int|null $parent_id
  *
- * @property Book[] $Book
- * @property Category[] $categories
- * @property Category $parent
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -26,6 +22,13 @@ class Category extends \yii\db\ActiveRecord
         return 'categories';
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -33,9 +36,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['parent_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
-            [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['parent_id' => 'id']],
         ];
     }
 
@@ -47,41 +48,18 @@ class Category extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'parent_id' => 'Parent ID',
         ];
     }
 
     /**
-     * Gets query for [[Categories]].
-     *
-     * @return ActiveQuery
-     */
-    public function getCategories(): ActiveQuery
-    {
-        return $this->hasMany(Category::class, ['parent_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Parent]].
-     *
-     * @return ActiveQuery
-     */
-    public function getParent(): ActiveQuery
-    {
-        return $this->hasOne(Category::class, ['id' => 'parent_id']);
-    }
-
-    /**
      * @param string $name
-     * @param int $parent_id
      * @return array|self
      * @throws \yii\db\Exception
      */
-    public static function create(string $name, int $parent_id )
+    public static function create(string $name)
     {
         $category = new self();
         $category->name = $name;
-        $category->parent_id = $parent_id;
 
         if (!$category->save()) {
             return  $category->getErrors();
