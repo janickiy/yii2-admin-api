@@ -1,7 +1,6 @@
 <?php
 
 use common\models\Category;
-use yii\grid\SerialColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -29,15 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => SerialColumn::class],
+            ['class' => 'yii\grid\SerialColumn'],
+
             'id',
             'name',
+            'parent_id',
             [
                 'class' => ActionColumn::class,
                 'visibleButtons' => [
-                    'delete'=> function($model){
-                        return $model->id !== Yii::$app->user->id;
-                    }
+                    'update' => Yii::$app->user->can('updateContent'),
+                    'delete' => Yii::$app->user->can('updateContent'),
                 ],
                 'urlCreator' => function ($action, Category $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);

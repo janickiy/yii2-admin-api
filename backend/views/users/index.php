@@ -13,6 +13,7 @@ use yii\widgets\Pjax;
 
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="user-index">
 
@@ -28,25 +29,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'username',
             'name',
             'email',
-            //'phone',
-            //'auth_key',
-            //'password_hash',
-            //'password_reset_token',
-            //'email:email',
-            //'status',
-            //'created_at',
-            //'updated_at',
-            //'verification_token',
             [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, User $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                },
+                'visibleButtons' => [
+                    'update' => Yii::$app->user->can('updateContent'),
+                    'delete' => function ($model, $key, $index) {
+                        return $model->id !== Yii::$app->user->identity->id && Yii::$app->user->can('updateContent');
+                    }
+                ],
             ],
         ],
     ]); ?>
