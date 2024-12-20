@@ -5,6 +5,9 @@ namespace app\modules\api\controllers;
 use app\models\FeedbackForm;
 use yii\rest\Controller;
 
+/**
+ * @OA\Info(title="My First API", version="0.1")
+ */
 class FeedbackController extends Controller
 {
     public function behaviors() {
@@ -15,6 +18,17 @@ class FeedbackController extends Controller
         ];
         return $behaviors;
     }
+    /**
+     * @OA\Get(
+     *   tags={"Products"},
+     *   path="/products/{product_id}",
+     *   @OA\Response(
+     *       response="default",
+     *       description="successful operation",
+     *
+     *   )
+     * )
+     */
 
     public function actionCreate()
     {

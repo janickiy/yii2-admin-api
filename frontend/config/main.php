@@ -20,6 +20,10 @@ return [
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
+        'jwt' => [
+            'class' => \kaabar\jwt\Jwt::class,
+            'key' => 'SECRET-KEY',
+        ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
@@ -45,6 +49,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/swagger/doc.json' => 'swagger/doc',
             ],
         ],
     ],

@@ -10,13 +10,14 @@ class RegisterForm extends Model
 {
     public $username;
     public $password;
+    public $name;
     public $email;
     public $auth_key;
 
     public function rules(): array
     {
         return [
-            [['username', 'password', 'email'], 'required'],
+            [['username', 'name', 'password', 'email'], 'required'],
             ['username', 'string', 'min' => 3, 'max' => 255],
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => User::class, 'message' => 'This email is already taken.'],
@@ -37,6 +38,7 @@ class RegisterForm extends Model
         if ($this->validate()) {
             $user = new User();
             $user->username = $this->username;
+            $user->name = $this->name;
             $user->email = $this->email;
             $user->password_hash = Yii::$app->security->generatePasswordHash($this->password);
             $user->auth_key = Yii::$app->security->generateRandomString();

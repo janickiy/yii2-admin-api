@@ -21,7 +21,7 @@ class AuthController extends Controller
             'class' => \kaabar\jwt\JwtHttpBearerAuth::class,
             'except' => [
                 'login',
-                'register',
+                'registration',
                 'options',
             ],
         ];
@@ -36,11 +36,11 @@ class AuthController extends Controller
         $model = new LoginForm();
         $post = Yii::$app->request->post();
 
-        if (!isset($post['login']) || !isset($post['password'])) {
+        if (!isset($post['username']) || !isset($post['password'])) {
             return ['error' => 'Необходимо заполнить поля: логин и пароль'];
         }
 
-        $model->username = $post['login'];
+        $model->username = $post['username'];
         $model->password = $post['password'];
 
         if ($model->login()) {
@@ -57,14 +57,14 @@ class AuthController extends Controller
      * @throws \yii\base\Exception
      * @throws \yii\db\Exception
      */
-    public function actionRegister()
+    public function actionRegistration()
     {
         $model = new RegisterForm();
         $post = Yii::$app->request->post();
-
-        $model->username = $post['username'] ?? '';
-        $model->password = $post['password'] ?? '';
-        $model->email = $post['email'] ?? '';
+        $model->name = $post['name'];
+        $model->username = $post['username'];
+        $model->password = $post['password'];
+        $model->email = $post['email'];
 
         if ($model->register()) {
             return [
