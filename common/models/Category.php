@@ -19,7 +19,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%categorie}}';
+        return '{{%categories}}';
     }
 
     public function behaviors()

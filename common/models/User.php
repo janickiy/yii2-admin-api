@@ -24,6 +24,7 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  */
+
 class User extends ActiveRecord implements IdentityInterface
 {
     const int STATUS_DELETED = 0;
@@ -72,7 +73,18 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        $refreshToken = UserRefreshTokens::find()
+            ->where(['urf_token' => (string)$token])
+            ->andWhere(['>', 'urf_expires_at', time()])
+            ->one();
+
+        if (!$refreshToken) {
+            return null;
+        }
+
+        return User::find()
+            ->where(['id' => $refreshToken->urf_userID])
+            ->one();
     }
 
     /**

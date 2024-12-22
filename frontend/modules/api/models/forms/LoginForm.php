@@ -6,6 +6,49 @@ use common\models\User;
 use Yii;
 use yii\base\Model;
 
+
+/**
+ * @OA\Schema(
+ *      schema="User",
+ *      required={"username"},
+ *     @OA\Property(
+ *        property="id",
+ *        description="User ID",
+ *        type="integer",
+ *        format="int64",
+ *    ),
+ *     @OA\Property(
+ *        property="username",
+ *        description="user name",
+ *        type="string",
+ *        maxLength=100,
+ *    ),
+ *     @OA\Property(
+ *        property="email",
+ *        description="Mail",
+ *        type="string",
+ *        maxLength=100,
+ *    ),
+ *     @OA\Property(
+ *        property="password",
+ *        description="password",
+ *        type="string",
+ *        maxLength=64,
+ *    ),
+ *     @OA\Property(
+ *        property="created_at",
+ *        description="creationTime",
+ *        type="string",
+ *        default="0",
+ *    ),
+ *     @OA\Property(
+ *        property="last_login_at",
+ *        description="最后登录时间",
+ *        type="string",
+ *        default="0",
+ *    ),
+ *)
+
 /**
  * LoginForm is the model behind the login form.
  *

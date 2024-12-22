@@ -2,119 +2,49 @@
 
 namespace app\modules\api\controllers;
 
-use app\models\Categories;
+use common\models\Category;
 use yii\rest\Controller;
+use Yii;
+use yii\web\Response;
 
 class CategoryController extends Controller
 {
-    public function behaviors() {
+    public function init()
+    {
+        parent::init();
+        Yii::$app->request->parsers = ['application/json' => 'yii\web\JsonParser'];
+    }
+
+    public function behaviors()
+    {
         $behaviors = parent::behaviors();
+
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::class,
+        ];
 
         $behaviors['authenticator'] = [
             'class' => \kaabar\jwt\JwtHttpBearerAuth::class,
         ];
+
+        $behaviors['contentNegotiator']['formats'] = ['application/json' => Response::FORMAT_JSON];
+
         return $behaviors;
     }
 
     public function actionIndex()
     {
-
-        $categories = Categories::find()
-            ->where(['parent_id' => null])
-            ->with(['books', 'categories'])
-            ->all();
+        $categories = Category::find()->all();
 
         $result = [];
         foreach ($categories as $category) {
-            // Формируем массив с данными категории
             $categoryData = [
                 'id' => $category->id,
                 'name' => $category->name,
-                'books' => $this->formatBooks($category->books),
-                'subcategories' => $this->formatSubcategories($category->categories),
             ];
             $result[] = $categoryData;
         }
 
         return $result;
-    }
-
-    public function actionSearch($title = null, $author = null, $status = null)
-    {
-        $categories = Categories::find()
-            ->where(['parent_id' => null])
-            ->with(['books'])
-            ->all();
-
-        $result = [];
-        foreach ($categories as $category) {
-            $booksQuery = $category->getBooks();
-
-            if ($title) {
-                $booksQuery->andWhere(['like', 'title', $title]);
-            }
-
-            if ($author) {
-                $booksQuery->andWhere(['like', 'author', $author]);
-            }
-
-            if ($status) {
-                $booksQuery->andWhere(['status' => $status]);
-            }
-
-            $books = $booksQuery->all();
-
-            $categoryData = [
-                'id' => $category->id,
-                'name' => $category->name,
-                'books' => $this->formatBooks($books),
-            ];
-            $result[] = $categoryData;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Форматируем данные книг
-     *
-     * @param \yii\db\ActiveQuery $books
-     * @return array
-     */
-    private function formatBooks($books)
-    {
-        $bookData = [];
-        foreach ($books as $book) {
-            $bookData[] = [
-                'id' => $book->id,
-                'title' => $book->title,
-                'isbn' => $book->isbn,
-                'thumbnailUrl' => $book->thumbnailUrl,
-                'pageCount' => $book->pageCount,
-                'shortDescription' => $book->shortDescription,
-                'status' => $book->status,
-                'publishedDate' => $book->publishedDate,
-                'link' => \Yii::$app->urlManager->createUrl(['api/book/view', 'id' => $book->id])
-            ];
-        }
-        return $bookData;
-    }
-
-    /**
-     * Форматируем данные подкатегорий
-     *
-     * @param \yii\db\ActiveQuery $subcategories
-     * @return array
-     */
-    private function formatSubcategories($subcategories)
-    {
-        $subcategoryData = [];
-        foreach ($subcategories as $subcategory) {
-            $subcategoryData[] = [
-                'id' => $subcategory->id,
-                'name' => $subcategory->name,
-            ];
-        }
-        return $subcategoryData;
     }
 }
