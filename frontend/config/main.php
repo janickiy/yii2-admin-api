@@ -22,7 +22,7 @@ return [
         ],
         'jwt' => [
             'class' => \kaabar\jwt\Jwt::class,
-            'key' => 'SECRET-KEY',
+            'key' => 'mL6RjByhZkIV4//21lo0+ZP4qTl7DI7bgiD21b3jnBw=',
         ],
         'user' => [
             'identityClass' => 'common\models\User',

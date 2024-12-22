@@ -18,7 +18,7 @@ class RegisterForm extends Model
     {
         return [
             [['username', 'name', 'password', 'email'], 'required'],
-            ['username', 'string', 'min' => 3, 'max' => 255],
+            [['username','name'], 'string', 'min' => 3, 'max' => 255],
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => User::class, 'message' => 'This email is already taken.'],
             ['username', 'unique', 'targetClass' => User::class, 'message' => 'This username is already taken.'],

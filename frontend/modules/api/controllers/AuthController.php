@@ -11,14 +11,24 @@ use app\modules\api\models\forms\RegisterForm;
 use yii\rest\Controller;
 use yii\web\UnauthorizedHttpException;
 use yii\web\ServerErrorHttpException;
-use yii\web\Cookie;
+use kaabar\jwt\JwtHttpBearerAuth;
+
 
 class AuthController extends Controller
 {
-    public function behaviors() {
+    public $enableCsrfValidation = false;
+
+    public function init()
+    {
+        parent::init();
+        Yii::$app->request->parsers = ['application/json' => 'yii\web\JsonParser'];
+    }
+
+    public function behaviors()
+    {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
-            'class' => \kaabar\jwt\JwtHttpBearerAuth::class,
+            'class' => JwtHttpBearerAuth::class,
             'except' => [
                 'login',
                 'registration',
@@ -29,26 +39,50 @@ class AuthController extends Controller
     }
 
     /**
-     * @return array|string[]
+     * @OA\Post(
+     *     path="/auth/login/",
+     *     summary="Login to get JWT token",
+     *     description="Logs in the user and generates a JWT token and refresh token.",
+     *     operationId="login",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="User credentials",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="username", type="string"),
+     *             @OA\Property(property="password", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Login successful, returns JWT token and user details",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="user", ref="#/components/schemas/User"),
+     *             @OA\Property(property="token", type="string", description="JWT token")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Invalid credentials",
+     *     )
+     * )
      */
     public function actionLogin()
     {
         $model = new LoginForm();
-        $post = Yii::$app->request->post();
 
-        if (!isset($post['username']) || !isset($post['password'])) {
-            return ['error' => 'Необходимо заполнить поля: логин и пароль'];
-        }
-
-        $model->username = $post['username'];
-        $model->password = $post['password'];
-
-        if ($model->login()) {
+        if ($model->load(Yii::$app->request->bodyParams, '') && $model->login()) {
             $user = Yii::$app->user->identity;
             $token = $this->generateJwt($user);
-            return ['token' => $token];
+
+            $this->generateRefreshToken($user, $token);
+
+            return [
+                'user' => $user->id,
+                'token' => (string)$token,
+            ];
         } else {
-            return ['error' => $model->errors];
+            return $model->getFirstErrors();
         }
     }
 
@@ -60,6 +94,7 @@ class AuthController extends Controller
     public function actionRegistration()
     {
         $model = new RegisterForm();
+
         $post = Yii::$app->request->post();
         $model->name = $post['name'];
         $model->username = $post['username'];
@@ -68,17 +103,12 @@ class AuthController extends Controller
 
         if ($model->register()) {
             return [
-                'status' => 'ok',
-                'message' => 'User registered successfully.'
+                'result' => true,
             ];
         } else {
-            return [
-                'status' => 'error',
-                'errors' => $model->errors
-            ];
+            return $model->getFirstErrors();
         }
     }
-
 
     /**
      * @return string[]|ServerErrorHttpException|UnauthorizedHttpException
@@ -99,10 +129,10 @@ class AuthController extends Controller
                 return new UnauthorizedHttpException('The refresh token no longer exists.');
             }
 
-            $user = User::find()
-            ->where(['userID' => $userRefreshToken->urf_userID])
+            $user = User::find()->where(['userID' => $userRefreshToken->urf_userID])
                 ->andWhere(['not', ['usr_status' => 'inactive']])
                 ->one();
+
             if (!$user) {
                 $userRefreshToken->delete();
                 return new UnauthorizedHttpException('The user is inactive.');
@@ -126,10 +156,6 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * @param User $user
-     * @return mixed
-     */
     private function generateJwt(User $user)
     {
         $jwt = Yii::$app->jwt;
@@ -137,51 +163,39 @@ class AuthController extends Controller
         $key = $jwt->getKey();
 
         $now = new \DateTimeImmutable();
+
         $jwtParams = Yii::$app->params['jwt'];
 
         $token = $jwt->getBuilder()
-            ->issuedBy($jwtParams['issuer'])    
-            ->permittedFor($jwtParams['audience']) 
+            ->issuedBy($jwtParams['issuer'])
+            ->permittedFor($jwtParams['audience'])
             ->identifiedBy($jwtParams['id'], true)
             ->issuedAt($now)
-            ->expiresAt($now->modify($jwtParams['expire'])) 
+            ->canOnlyBeUsedAfter($now->modify($jwtParams['request_time']))
+            ->expiresAt($now->modify($jwtParams['expire']))
             ->withClaim('uid', $user->id)
             ->getToken($signer, $key);
 
-        return $token->toString();
+        $token = $token->toString();
+        $this->generateRefreshToken($user, $token);
+
+        return $token;
     }
 
-    /**
-     * @param User $user
-     * @param User|null $impersonator
-     * @return UserRefreshTokens
-     * @throws ServerErrorHttpException
-     * @throws \yii\base\Exception
-     * @throws \yii\db\Exception
-     */
-    private function generateRefreshToken(User $user, User $impersonator = null): UserRefreshTokens
+    private function generateRefreshToken(User $user, string $token)
     {
-        $refreshToken = Yii::$app->security->generateRandomString(200);
+        $expiresAt = (new \DateTimeImmutable())->modify('+1 hour')->getTimestamp();
         $userRefreshToken = new UserRefreshTokens([
             'urf_userID' => $user->id,
-            'urf_token'  => $refreshToken,
-            'urf_ip'     => Yii::$app->request->userIP,
+            'urf_token' => $token,
+            'urf_ip' => Yii::$app->request->userIP,
             'urf_user_agent' => Yii::$app->request->userAgent,
-            'urf_created'    => gmdate('Y-m-d H:i:s'),
+            'urf_expires_at' => $expiresAt,
+            'urf_created' => gmdate('Y-m-d H:i:s'),
         ]);
+
         if (!$userRefreshToken->save()) {
             throw new ServerErrorHttpException('Failed to save the refresh token: ' . $userRefreshToken->getErrorSummary(true));
         }
-
-        Yii::$app->response->cookies->add(new Cookie([
-            'name'  => 'refresh-token',
-            'value' => $refreshToken,
-            'httpOnly' => true,
-            'sameSite' => 'none',
-            'secure' => true,
-            'path'   => '/api/auth/refresh-token',
-        ]));
-
-        return $userRefreshToken;
     }
 }

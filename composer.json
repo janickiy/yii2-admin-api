@@ -24,7 +24,7 @@
         "kartik-v/yii2-editable": "dev-master",
         "kaabar-jwt/yii2-jwt": "dev-master",
         "yiisoft/yii2-httpclient": "^2.0",
-        "yiisoft/yii2-gii": "*",
+        "zircote/swagger-php": "^4.11",
         "doctrine/annotations": "^2.0"
     },
     "require-dev": {
@@ -39,9 +39,7 @@
         "codeception/module-filesystem": "^3.0 || ^2.0 || ^1.1",
         "codeception/verify": "^3.0 || ^2.2",
         "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4",
-        "phpunit/php-code-coverage": "^9.2",
-        "zircote/swagger-php": "*",
-        "bestyii/yii2-openapi-reader": "*"
+        "phpunit/php-code-coverage": "^9.2"
     },
     "autoload-dev": {
         "psr-4": {

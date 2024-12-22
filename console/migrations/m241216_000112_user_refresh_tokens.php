@@ -18,8 +18,21 @@ class m241216_000112_user_refresh_tokens extends Migration
             'urf_token' => $this->string(1000)->notNull(),
             'urf_ip' => $this->string(50)->notNull(),
             'urf_user_agent' => $this->string(1000)->notNull(),
-            'urf_create' => $this->dateTime()->notNull()->comment('UTC'),
+            'urf_created' => $this->dateTime()->notNull()->comment('UTC'),
+            'urf_expires_at' => $this->integer()->notNull()->comment('Timestamp'),
         ]);
+
+        $this->addForeignKey(
+            'fk-user_refresh_tokens-user',
+            '{{%user_refresh_tokens}}',
+            'urf_userID',
+            '{{%user}}',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+
+        $this->addCommentOnTable('{{%user_refresh_tokens}}', 'For JWT authentication process');
     }
 
     /**
@@ -27,6 +40,8 @@ class m241216_000112_user_refresh_tokens extends Migration
      */
     public function safeDown()
     {
+        $this->dropForeignKey('fk-user_refresh_tokens-user', '{{%user_refresh_tokens}}');
+
         $this->dropTable('{{%user_refresh_tokens}}');
     }
 }
