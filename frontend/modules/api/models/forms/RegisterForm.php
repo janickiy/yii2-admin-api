@@ -8,10 +8,10 @@ use yii\base\Model;
 
 class RegisterForm extends Model
 {
-    public $username;
-    public $password;
-    public $name;
-    public $email;
+    public string $username;
+    public string $password;
+    public string $name;
+    public string $email;
     public $auth_key;
 
     public function rules(): array

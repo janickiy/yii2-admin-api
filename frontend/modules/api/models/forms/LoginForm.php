@@ -18,6 +18,12 @@ use yii\base\Model;
  *        format="int64",
  *    ),
  *     @OA\Property(
+ *         property="name",
+ *         description="name",
+ *         type="string",
+ *         maxLength=255,
+ *     ),
+ *     @OA\Property(
  *        property="username",
  *        description="user name",
  *        type="string",
@@ -48,8 +54,8 @@ use yii\base\Model;
  *        default="0",
  *    ),
  *)
-
-/**
+ *
+* /**
  * LoginForm is the model behind the login form.
  *
  * @property-read User|null $user
@@ -57,11 +63,11 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
-    public $username;
-    public $password;
-    public $rememberMe = true;
+    public string $username;
+    public string $password;
+    public bool $rememberMe = true;
 
-    private $_user = false;
+    private bool $_user = false;
 
     public function rules(): array
     {
