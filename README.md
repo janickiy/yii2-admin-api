@@ -54,4 +54,5 @@ return [
 bash
 
 docker-compose exec -it yii2_docker_app php yii migrate --migrationPath=@yii/rbac/migrations
+docker-compose exec -it yii2_docker_app php yii migrate
 
