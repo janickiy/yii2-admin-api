@@ -43,3 +43,5 @@ phpunit.phar
 /backend/web/index-test.php
 /backend/web/robots.txt
 /docker/mysql/*
+/docker/mysql_data/
+/docker/pg_data/
