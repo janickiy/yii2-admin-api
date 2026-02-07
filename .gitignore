@@ -2,7 +2,7 @@
 /yii
 /yii_test
 /yii_test.bat
-docker/.env
+.env
 
 # phpstorm project files
 .idea

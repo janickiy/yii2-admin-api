@@ -2,31 +2,56 @@
     <h1 align="center">Yii 2 Advanced Docker Template</h1>
 </p>
 
-<h3>Project contains next modules:</h3>
+<h3>Модули проекта:</h3>
 
 - Yii2 advanced template
-- php:8.3-fpm
+- php:8.4-fpm
 - nginx:alpine
 
-<h3>To get started follow these steps:</h3>
+<h3>Доступ к сервисам:</h3>
 
-- Go to docker folder and create <code>.env</code> file (you can copy content of .env-example file)
-- Run <code>docker compose build</code> from docker folder
-- After success build run <code>docker compose up -d</code>
-- Go inside the php-fpm container using the following command: <code>docker exec -it advanced-php-fpm sh</code>
-- Install the dependencies using composer: <code>composer install</code> (make sure you are in the project folder)
-- Next, initialize yii2 using the command: <code>php init</code>
-- After this, you can leave the container with the <code>exit</code> command
-- Now you need to update the <code>/etc/hosts</code> file and set the virtual domain name according to the FRONTEND_SERVER_NAME and BACKEND_SERVER_NAME parameters in the .env file.
-- Or you can simply run following code (for ubuntu):
-```
-echo 127.0.0.1 front.yii2.loc >> /etc/hosts;
-echo 127.0.0.1 back.yii2.loc >> /etc/hosts;
-```
-if you changed <code>FRONTEND_SERVER_NAME</code> or <code>BACKEND_SERVER_NAME</code> in <code>.env</code> file, then replace <code>front.yii2.loc</code> and <code>back.yii2.loc</code> with your actual domains
+    Frontend: http://localhost:8080
+    Backend: http://localhost:8081
+    phpMyAdmin: http://localhost:8082
 
-Migration
 
-php yii migrate
-php yii migrate/up --migrationPath=@yii/rbac/migrations
-php yii my-rbac/init
+<h3>Как запустить</h3>
+
+- Поместите файлы в корень проекта.
+- Выполните команду:
+  
+bash
+
+docker-compose up -d --build
+
+<h3>Инициализацию приложения</h3>
+
+bash
+
+docker exec -it yii2_docker_app php init --env=Development --overwrite=All && \
+docker exec -it yii2_docker_app composer install
+
+<h3>Подготовьте компонент authManager</h3>
+Откройте файл common/config/main.php (или main-local.php). 
+Компонент authManager, добавленный туда, будет автоматически доступен и во фронтенде, и в бэкенде, и в консоли.
+
+php
+
+// common/config/main.php
+return [
+    'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            // Использовать кеш для RBAC (раз мы его уже настроили)
+            'cache' => 'cache',
+        ],
+        // ... ваш кеш и база данных здесь же
+    ],
+];
+
+И запускаем миграцию
+
+bash
+
+docker-compose exec -it yii2_docker_app php yii migrate --migrationPath=@yii/rbac/migrations
+
