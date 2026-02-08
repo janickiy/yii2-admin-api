@@ -45,3 +45,4 @@ phpunit.phar
 /docker/mysql/*
 /docker/mysql_data/
 /docker/pg_data/
+/composer.lock

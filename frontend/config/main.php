@@ -49,7 +49,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '/swagger/doc.json' => 'swagger/doc',
+                'GET swagger/json' => 'swagger/json',
+                'GET swagger/ui' => 'swagger/ui',
             ],
         ],
     ],

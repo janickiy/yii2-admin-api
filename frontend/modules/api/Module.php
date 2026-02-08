@@ -7,6 +7,7 @@ namespace app\modules\api;
  */
 class Module extends \yii\base\Module
 {
+    public string $schema = '/swagger/swagger/doc';
     /**
      * {@inheritdoc}
      */

@@ -12,8 +12,9 @@ use yii\rest\Controller;
 use yii\web\UnauthorizedHttpException;
 use yii\web\ServerErrorHttpException;
 use kaabar\jwt\JwtHttpBearerAuth;
+use OpenApi\Attributes as OAT;
 
-
+#[OAT\Info(title: 'My First API', version: '0.1')]
 class AuthController extends Controller
 {
     public $enableCsrfValidation = false;
@@ -38,37 +39,38 @@ class AuthController extends Controller
         return $behaviors;
     }
 
-    /**
-     * @OA\Post(
-     *     path="/auth/login/",
-     *     summary="Login to get JWT token",
-     *     description="Logs in the user and generates a JWT token and refresh token.",
-     *     operationId="login",
-     *     tags={"Auth"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="User credentials",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="username", type="string"),
-     *             @OA\Property(property="password", type="string")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Login successful, returns JWT token and user details",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="user", ref="#/components/schemas/User"),
-     *             @OA\Property(property="token", type="string", description="JWT token")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Invalid credentials",
-     *     )
-     * )
-     */
-
-
+    #[OAT\Post(
+        path: '/api/auth/login',
+        summary: 'Авторизация пользователя',
+        description: 'Возвращает JWT токен при успешном входе',
+        tags: ['Auth'],
+        requestBody: new OAT\RequestBody(
+            required: true,
+            content: new OAT\JsonContent(
+            required: ['username', 'password'],
+            properties: [
+                new OAT\Property(property: 'username', type: 'string', example: 'admin'),
+                new OAT\Property(property: 'password', type: 'string', format: 'password', example: 'secret123')
+                ]
+            )
+        ),
+        responses: [
+            new OAT\Response(
+                response: 200,
+                description: 'Успешный вход',
+                content: new OAT\JsonContent(
+                    properties: [
+                        new OAT\Property(property: 'token', type: 'string', example: 'eyJhbGciOiJIUzI1NiJ9...')
+                    ]
+                )
+            ),
+            new OAT\Response(
+                response: 401,
+                description: 'Неверный логин или пароль'
+            )
+        ]
+    ),
+    ]
     public function actionLogin()
     {
         $model = new LoginForm();
@@ -76,7 +78,6 @@ class AuthController extends Controller
         if ($model->load(Yii::$app->request->bodyParams, '') && $model->login()) {
             $user = Yii::$app->user->identity;
             $token = $this->generateJwt($user);
-
             $this->generateRefreshToken($user, $token);
 
             return [
@@ -112,6 +113,41 @@ class AuthController extends Controller
         }
     }
 
+    #[OAT\Post(
+        path: '/auth/refresh-token',
+        summary: 'Обновление access-токена',
+        description: 'Использует refresh-токен для получения новой пары токенов',
+        tags: ['Auth'],
+        requestBody: new OAT\RequestBody(
+            required: true,
+            content: new OAT\JsonContent(
+                required: ['refresh_token'],
+                properties: [
+                    new OAT\Property(
+                        property: 'refresh_token',
+                        type: 'string',
+                        example: 'def5020081014e2c...'
+                    )
+                ]
+            )
+        ),
+        responses: [
+            new OAT\Response(
+                response: 200,
+                description: 'Токены успешно обновлены',
+                content: new OAT\JsonContent(
+                    properties: [
+                        new OAT\Property(property: 'token', type: 'string', example: 'new_access_token'),
+                        new OAT\Property(property: 'refresh_token', type: 'string', example: 'new_refresh_token')
+                    ]
+                )
+            ),
+            new OAT\Response(
+                response: 401,
+                description: 'Refresh-токен невалиден или просрочен'
+            )
+        ]
+    )]
     /**
      * @return string[]|ServerErrorHttpException|UnauthorizedHttpException
      * @throws \Throwable
@@ -158,6 +194,10 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @param User $user
+     * @return string
+     */
     private function generateJwt(User $user)
     {
         $jwt = Yii::$app->jwt;
@@ -184,7 +224,14 @@ class AuthController extends Controller
         return $token;
     }
 
-    private function generateRefreshToken(User $user, string $token)
+    /**
+     * @param User $user
+     * @param string $token
+     * @return void
+     * @throws ServerErrorHttpException
+     * @throws \yii\db\Exception
+     */
+    private function generateRefreshToken(User $user, string $token): void
     {
         $expiresAt = (new \DateTimeImmutable())->modify('+1 hour')->getTimestamp();
         $userRefreshToken = new UserRefreshTokens([
