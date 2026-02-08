@@ -89,6 +89,38 @@ class AuthController extends Controller
         }
     }
 
+    #[OAT\Post(
+        path: 'api/auth/registration',
+        summary: 'Регистрация нового пользователя',
+        tags: ['Auth'],
+        requestBody: new OAT\RequestBody(
+            required: true,
+            content: new OAT\JsonContent(
+                required: ['email', 'password', 'username'],
+                properties: [
+                    new OAT\Property(property: 'email', type: 'string', format: 'email', example: 'user@example.com'),
+                    new OAT\Property(property: 'password', type: 'string', format: 'password', example: 'StrongPass123!'),
+                    new OAT\Property(property: 'username', type: 'string', example: 'ivan_ivanov'),
+                ]
+            )
+        ),
+        responses: [
+            new OAT\Response(
+                response: 201,
+                description: 'Пользователь успешно создан',
+                content: new OAT\JsonContent(
+                    properties: [
+                        new OAT\Property(property: 'status', type: 'string', example: 'success'),
+                        new OAT\Property(property: 'id', type: 'integer', example: 1)
+                    ]
+                )
+            ),
+            new OAT\Response(
+                response: 422,
+                description: 'Ошибка валидации (например, email уже занят)'
+            )
+        ]
+    )]
     /**
      * @return array|string[]
      * @throws \yii\base\Exception
@@ -194,9 +226,12 @@ class AuthController extends Controller
         }
     }
 
+
     /**
      * @param User $user
-     * @return string
+     * @return mixed
+     * @throws ServerErrorHttpException
+     * @throws \yii\db\Exception
      */
     private function generateJwt(User $user)
     {
