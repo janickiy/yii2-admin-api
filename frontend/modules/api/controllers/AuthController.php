@@ -90,7 +90,7 @@ class AuthController extends Controller
     }
 
     #[OAT\Post(
-        path: 'api/auth/registration',
+        path: '/api/auth/registration',
         summary: 'Регистрация нового пользователя',
         tags: ['Auth'],
         requestBody: new OAT\RequestBody(
@@ -146,7 +146,7 @@ class AuthController extends Controller
     }
 
     #[OAT\Post(
-        path: '/auth/refresh-token',
+        path: '/api/auth/refresh-token',
         summary: 'Обновление access-токена',
         description: 'Использует refresh-токен для получения новой пары токенов',
         tags: ['Auth'],
