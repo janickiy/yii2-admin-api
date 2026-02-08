@@ -21,6 +21,7 @@
 - Выполните команду:
   
 bash
+cp .env.example .env и заполнить необходимыми данными
 
 docker-compose up -d --build
 
