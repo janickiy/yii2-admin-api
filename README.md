@@ -50,6 +50,10 @@ return [
     ],
 ];
 
+'dsn' => 'mysql:host=mysql_db;dbname=' . getenv('MYSQL_DB_NAME'),
+'username' => 'root',
+'password' => getenv('MYSQL_ROOT_PASSWORD'),
+
 И запускаем миграцию
 
 bash
