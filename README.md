@@ -57,3 +57,8 @@ bash
 docker-compose exec -it yii2_docker_app php yii migrate --migrationPath=@yii/rbac/migrations
 docker-compose exec -it yii2_docker_app php yii migrate
 
+
+Сваггер
+
+http://localhost:8080/swagger/ui
+
